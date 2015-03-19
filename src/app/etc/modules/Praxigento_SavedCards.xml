@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright (c) 2015, Praxigento
+* All rights reserved.
+*/
+-->
+<!-- Payments by saved credit cards for Praxigento projects. -->
+<config>
+	<modules>
+		<Praxigento_SavedCards>
+			<active>true</active>
+			<codePool>community</codePool>
+		</Praxigento_SavedCards>
+	</modules>
+</config>

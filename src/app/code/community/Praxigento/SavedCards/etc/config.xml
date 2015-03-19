@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2015, Praxigento
+ * All rights reserved.
+ */
+-->
+<!-- http://www.magentocommerce.com/wiki/5_-_modules_and_development/reference/module_config.xml -->
+<config>
+	<modules>
+		<Praxigento_SavedCards>
+			<version>0.0.1</version>
+		</Praxigento_SavedCards>
+	</modules>
+	<global>
+		<blocks>
+			<prxgt_savedcards_block>
+				<class>Praxigento_SavedCards_Block</class>
+			</prxgt_savedcards_block>
+		</blocks>
+		<helpers>
+			<!-- Default helper for module (prevents errors like "Class 'Namespace_Module_Helper_Data' not found in") -->
+			<!-- used in <node module="nspace_module_helper"> nodes -->
+			<prxgt_savedcards_helper>
+				<class>Praxigento_SavedCards_Helper</class>
+			</prxgt_savedcards_helper>
+		</helpers>
+		<models>
+			<prxgt_savedcards_model>
+				<class>Praxigento_SavedCards_Model</class>
+			</prxgt_savedcards_model>
+		</models>
+		<resources>
+			<prxgt_savedcards_setup>
+				<setup>
+					<module>Praxigento_SavedCards</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</prxgt_savedcards_setup>
+		</resources>
+	</global>
+</config>

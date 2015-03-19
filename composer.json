@@ -1,0 +1,13 @@
+{
+  "name": "praxigento/mage_ext_saved_cards",
+  "type": "magento-module",
+  "license": "MIT",
+  "homepage": "https://github.com/praxigento/mage_ext_saved_cards",
+  "description": "Payments by saved credit cards for Praxigento projects.",
+  "authors": [
+    {
+      "name": "Alex Gusev",
+      "email": "alex@flancer64.com"
+    }
+  ]
+}
