@@ -11,5 +11,10 @@
  */
 class Praxigento_SavedCards_Model_Own_Service_PayPal_Call extends Praxigento_SavedCards_Model_Own_Base_Call
 {
+    function __construct()
+    {
+        Praxigento_SavedCards_Config::get()->initComposerAutoload();
+    }
+
 
 }
