@@ -9,6 +9,15 @@
  */
 class Praxigento_SavedCards_Config
 {
+    /** Session flag to save current credit card when card processing will succeed (boolean). */
+    const SESS_SAVE_CREDIT_CARD = 'prxgt_savedcards_save_card_in_registry';
+    /** model node name in module's etc/config.xml */
+    const CFG_MODEL = 'prxgt_savedcards_model';
+    /** ./etc/config.xml:/config/global/models/prxgt_savedcards_model_resource/entities */
+    const CFG_ENTITY_REGISTRY_CARD = 'own_registry_card';
+    /** ./etc/config.xml:/config/global/fieldsets/sales_convert_quote_payment */
+    const CFG_FLD_PAYMENT_SAVED_CARD_ID = 'prxgt_saved_card_id';
+    const ATTR_QUOTE_PAYMENT_SAVED_CARD_ID = self::CFG_FLD_PAYMENT_SAVED_CARD_ID;
     /**
      * Itself. Singleton.
      * We should not use static methods (bad testability).
@@ -28,6 +37,24 @@ class Praxigento_SavedCards_Config
             self::$_instance = new Praxigento_SavedCards_Config();
         }
         return self::$_instance;
+    }
+
+    /**
+     * Returns default helper for the module.
+     * @return Praxigento_SavedCards_Helper_Data
+     */
+    public function helper()
+    {
+        return Mage::helper('prxgt_savedcards_helper');
+    }
+
+    /**
+     * @param array $arguments
+     * @return Praxigento_SavedCards_Model_Own_Registry_Card
+     */
+    public function modelOwnRegistryCard($arguments = array())
+    {
+        return Mage::getModel(self::CFG_MODEL . '/' . self::CFG_ENTITY_REGISTRY_CARD, $arguments);
     }
 
     /**

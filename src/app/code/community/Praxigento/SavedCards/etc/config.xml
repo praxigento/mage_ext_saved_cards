@@ -28,7 +28,16 @@
         <models>
             <prxgt_savedcards_model>
                 <class>Praxigento_SavedCards_Model</class>
+                <resourceModel>prxgt_savedcards_model_resource</resourceModel>
             </prxgt_savedcards_model>
+            <prxgt_savedcards_model_resource>
+                <class>Praxigento_SavedCards_Resource</class>
+                <entities>
+                    <own_registry_card>
+                        <table>prxgt_savedcards_registry_card</table>
+                    </own_registry_card>
+                </entities>
+            </prxgt_savedcards_model_resource>
         </models>
         <resources>
             <prxgt_savedcards_setup>

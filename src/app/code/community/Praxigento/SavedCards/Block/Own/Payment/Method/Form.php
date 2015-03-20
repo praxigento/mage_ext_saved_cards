@@ -16,7 +16,7 @@ class Praxigento_SavedCards_Block_Own_Payment_Method_Form extends Mage_Payment_B
     const DOM_ID_WRAPPER = 'prxgt_savedcards_cc_wrapper';
     const FLD_SAVED_CARD_ID = 'prxgt_saved_card_id';
     const FLD_SAVE_FLAG = 'prxgt_saved_card_flag';
-    const VAL_NEW_CARD = 'prxgt_saved_card_flag';
+    const VAL_NEW_CARD = 'prxgt_saved_card_flag_new';
 
     /** @var Praxigento_SavedCards_Mysql4_Own_Registry_Card_Collection */
     private $_savedCards = null;
