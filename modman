@@ -1,4 +1,5 @@
 src/app/code/community/Praxigento/SavedCards/ app/code/community/Praxigento/SavedCards/
-src/app/design/adminhtml/default/default/layout/prxgt/savedcards/layout.xml app/design/adminhtml/default/default/layout/prxgt/savedcards/layout.xml
+src/app/design/adminhtml/default/default/layout/prxgt/savedcards/ app/design/adminhtml/default/default/layout/prxgt/savedcards/
+src/app/design/adminhtml/default/default/template/prxgt/savedcards/ app/design/adminhtml/default/default/template/prxgt/savedcards/
 src/app/etc/modules/Praxigento_SavedCards.xml app/etc/modules/Praxigento_SavedCards.xml
-src/js/prxgt/savedcards/prxgt_savedcards.js js/prxgt/savedcards/prxgt_savedcards.js
+src/js/prxgt/savedcards/ js/prxgt/savedcards/
