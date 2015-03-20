@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2015, Praxigento
+ * All rights reserved.
+ */
+-->
+<layout version="0.1.0">
+
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addJs">
+                <file>prxgt/autoship/prxgt_autoship.js</file>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+
+</layout>
