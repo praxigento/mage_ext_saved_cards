@@ -10,7 +10,7 @@
     <adminhtml_sales_order_create_index>
         <reference name="head">
             <action method="addJs">
-                <file>prxgt/autoship/prxgt_autoship.js</file>
+                <file>prxgt/savedcards/prxgt_savedcards.js</file>
             </action>
         </reference>
     </adminhtml_sales_order_create_index>

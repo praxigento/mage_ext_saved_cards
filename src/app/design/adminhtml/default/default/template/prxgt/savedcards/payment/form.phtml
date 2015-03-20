@@ -28,32 +28,34 @@
 <?php
 /** IMPORTANT: JavaScript is removed on the front in some cases (tags '<script>') */
 $_code = $this->getMethodCode();
+$selectorId = $_code . '_' . $this::FLD_SAVED_CARD_ID;
+if ($this::DOM_ID_SELECTOR != $selectorId) Mage::throwException('Frontend code is broken in Praxigento Saved Cards module.');
 $visibility = 'block';
 ?>
 <ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
 
 
-    <?php if($this->hasSavedCreditCards()) : ?>
+    <?php if ($this->hasSavedCreditCards()) : ?>
         <?php /** Display saved credit cards list. */ ?>
         <?php $visibility = 'none'; ?>
         <li>
-            <label for="<?php echo $_code ?>_<?php echo $this::FLD_SAVED_CARD_ID ?>">
+            <label for="<?php echo $selectorId ?>">
                 <?php echo $this->__('Select Saved Card') ?>
                 <em class="required">*</em>
             </label>
 
             <div class="input-box">
-                <select id="<?php echo $_code ?>_<?php echo $this::FLD_SAVED_CARD_ID ?>"
+                <select id="<?php echo $selectorId ?>"
                         name="payment[<?php echo $this::FLD_SAVED_CARD_ID ?>]"
-                        onchange="prxgt_autoship_selector_changed(
-                            '<?php echo $_code ?>_<?php echo $this::FLD_SAVED_CARD_ID ?>',
+                        onchange="prxgt_savedcards_selector_changed(
+                            '<?php echo $selectorId ?>',
                             'prxgt_autoship_cc_wrapper',
-                            '<?php echo Praxigento_Autoship_Block_Own_Payment_Method_Form::VAL_NEW_CARD ?>'
+                            '<?php echo $this::VAL_NEW_CARD ?>'
                             )">
-                    <option value="<?php echo Praxigento_Autoship_Block_Own_Payment_Method_Form::VAL_NEW_CARD ?>">
-                        Enter new credit card...
+                    <option value="<?php echo $this::VAL_NEW_CARD ?>">
+                        <?php echo $this->__('Enter new credit card...') ?>
                     </option>
-                    <?php foreach($this->getSavedCards() as $one): ?>
+                    <?php foreach ($this->getSavedCards() as $one): ?>
                         <option value="<?php $this->uiCardId($one) ?>"
                                 selected="true"><?php $this->uiCardValue($one) ?></option>
                     <?php endforeach ?>
@@ -64,9 +66,9 @@ $visibility = 'block';
     <?php else: ?>
 
         <?php /** Force "New credit card" flag */ ?>
-        <input type="hidden" id="<?php echo $_code ?>_<?php echo $this::FLD_SAVED_CARD_ID ?>"
+        <input type="hidden" id="<?php echo $selectorId ?>"
                name="payment[<?php echo $this::FLD_SAVED_CARD_ID ?>]"
-               value="<?php echo Praxigento_Autoship_Block_Own_Payment_Method_Form::VAL_NEW_CARD ?>"/>
+               value="<?php echo $this::VAL_NEW_CARD ?>"/>
 
     <?php endif; ?>
 
@@ -96,18 +98,18 @@ $visibility = 'block';
                 <select id="<?php echo $_code ?>_expiration" name="payment[cc_exp_month]"
                         class="month validate-cc-exp">
                     <?php $_ccExpMonth = $this->getInfoData('cc_exp_month') ?>
-                    <?php foreach($this->getCcMonths() as $k => $v): ?>
+                    <?php foreach ($this->getCcMonths() as $k => $v): ?>
                         <option
-                            value="<?php echo $k ? $k : '' ?>"<?php if($k == $_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                            value="<?php echo $k ? $k : '' ?>"<?php if ($k == $_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
                     <?php endforeach ?>
                 </select>
 
                 <?php $_ccExpYear = $this->getInfoData('cc_exp_year') ?>
                 <select id="<?php echo $_code ?>_expiration_yr" name="payment[cc_exp_year]"
                         class="year">
-                    <?php foreach($this->getCcYears() as $k => $v): ?>
+                    <?php foreach ($this->getCcYears() as $k => $v): ?>
                         <option
-                            value="<?php echo $k ? $k : '' ?>"<?php if($k == $_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                            value="<?php echo $k ? $k : '' ?>"<?php if ($k == $_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
                     <?php endforeach ?>
                 </select>
 
@@ -116,7 +118,7 @@ $visibility = 'block';
 
         <?php /*echo $this->getChildHtml()*/ ?>
 
-        <?php if($this->hasVerification()): ?>
+        <?php if ($this->hasVerification()): ?>
 
             <li id="<?php echo $_code ?>_cc_type_cvv_div">
                 <label for="<?php echo $_code ?>_cc_cid">
@@ -133,14 +135,14 @@ $visibility = 'block';
 
         <?php endif; ?>
 
-        <?php if($this->canDisplaySaveCardCheckbox()) : ?>
+        <?php if ($this->canDisplaySaveCardCheckbox()) : ?>
             <li>
                 <label
                     for="<?php echo $_code ?>_<?php echo $this::FLD_SAVE_FLAG ?>"><?php echo $this->__('Save credit card') ?></label>
 
                 <div class="input-box">
                     <input type="checkbox" id="<?php echo $_code ?>_<?php echo $this::FLD_SAVE_FLAG ?>"
-                           name="payment[<?php echo Praxigento_Autoship_Block_Own_Payment_Method_Form::FLD_SAVE_FLAG ?>]"
+                           name="payment[<?php echo $this::FLD_SAVE_FLAG ?>]"
                            title="<?php echo $this->__('Save Credit Card') ?>"
                            checked="true" style="float:left; margin-top: 3px; margin-right: 3px;"/> <label
                         for="<?php echo $_code ?>_<?php echo $this::FLD_SAVE_FLAG ?>"

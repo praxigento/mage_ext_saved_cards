@@ -41,6 +41,15 @@
             </prxgt_savedcards_setup>
         </resources>
     </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <prxgt_savedcards_admin_layout>
+                    <file>prxgt/savedcards/layout.xml</file>
+                </prxgt_savedcards_admin_layout>
+            </updates>
+        </layout>
+    </adminhtml>
     <default>
         <payment>
             <prxgt_savedcards_method translate="title" module="prxgt_savedcards_helper">
