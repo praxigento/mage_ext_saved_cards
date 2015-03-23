@@ -49,6 +49,14 @@ class Praxigento_SavedCards_Config
     }
 
     /**
+     * @return Praxigento_SavedCards_Resource_Own_Registry_Card_Collection
+     */
+    public function collectionOwnRegistryCard()
+    {
+        return $this->modelOwnRegistryCard()->getCollection();
+    }
+
+    /**
      * @param array $arguments
      * @return Praxigento_SavedCards_Model_Own_Registry_Card
      */

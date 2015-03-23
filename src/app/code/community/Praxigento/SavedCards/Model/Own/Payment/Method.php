@@ -153,7 +153,9 @@ class Praxigento_SavedCards_Model_Own_Payment_Method extends \Mage_Payment_Model
         ) {
             $result = $savedCard;
         } else {
-            $this->_log->error("Cannot load previously saved card '$entityId' for customer '$customerId'.");
+            $msg = "Cannot load previously saved card '$entityId' for customer '$customerId'.";
+            $this->_log->error($msg);
+            Mage::throwException($msg);
         }
         return $result;
     }

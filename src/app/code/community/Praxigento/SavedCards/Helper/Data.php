@@ -115,4 +115,14 @@ class Praxigento_SavedCards_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $result;
     }
+
+    /**
+     * Create masked number for credit card ('*******1234').
+     * @param $num string The last4 digits of the credit card number
+     * @return string
+     */
+    public function maskCreditCardNumber($num)
+    {
+        return '********' . $num;
+    }
 }
