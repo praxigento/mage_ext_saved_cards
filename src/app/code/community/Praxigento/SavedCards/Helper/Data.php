@@ -7,6 +7,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+use Praxigento_SavedCards_Config as Config;
+
 class Praxigento_SavedCards_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const MAGE_AMERICAN_EXPRESS = 'AE';
@@ -113,6 +115,70 @@ class Praxigento_SavedCards_Helper_Data extends Mage_Core_Helper_Abstract
                 break;
             }
         }
+        return $result;
+    }
+
+    /**
+     * Convert Magento address (billing or shipping) to Common Service address bean.
+     * @param Mage_Customer_Model_Address_Abstract $data
+     * @return Praxigento_SavedCards_Model_Own_Service_Common_Bean_Address
+     */
+    public function convertAddressMageToCommonService(\Mage_Customer_Model_Address_Abstract $data)
+    {
+        $result = Mage::getModel('prxgt_savedcards_model/own_service_common_bean_address');
+        $result->setAddress($data->getStreetFull());
+        $result->setCity($data->getData(Config::ATTR_ADDR_CITY));
+        $result->setCompany($data->getData(Config::ATTR_ADDR_COMPANY));
+        $result->setCountry($data->getData(Config::ATTR_ADDR_COUNTRY_ID));
+        $result->setNameFirst($data->getData(Config::ATTR_ADDR_NAME_FIRST));
+        $result->setNameLast($data->getData(Config::ATTR_ADDR_NAME_LAST));
+        $result->setPhone($data->getData(Config::ATTR_ADDR_PHONE));
+        $stateId = $data->getData(Config::ATTR_ADDR_STATE_ID);
+        $region = Mage::getModel('directory/region')->load($stateId);
+        $result->setState($region->getCode());
+        $result->setZip($data->getData(Config::ATTR_ADDR_ZIP));
+        return $result;
+    }
+
+    /**
+     * Convert Magento Customer to Common Service customer bean.
+     * @param Mage_Customer_Model_Customer $data
+     * @return Praxigento_SavedCards_Model_Own_Service_Common_Bean_Customer
+     */
+    public function convertCustomerMageToCommonService(\Mage_Customer_Model_Customer $data)
+    {
+        $result = Mage::getModel('prxgt_savedcards_model/own_service_common_bean_customer');
+        $result->setAnReference($data->getData(Config::ATTR_CUST_AN_CUSTOMER_ID));
+        $result->setEmail($data->getEmail());
+        $result->setIdMage($data->getId());
+        $result->setNameFirst($data->getData(Config::ATTR_CUST_NAME_FIRST));
+        $result->setNameLast($data->getData(Config::ATTR_CUST_NAME_LAST));
+        return $result;
+    }
+
+    /**
+     * Module internal formatting.
+     *
+     * @param $val
+     * @return string
+     */
+    public static function  formatAmount($val)
+    {
+        $result = number_format($val, 2, '.', '');
+        return $result;
+    }
+
+    /**
+     * PayPal compatible formatting.
+     * Currency amount must be non-negative number, may optionally contain exactly 2 decimal places separated by '.',
+     * optional thousands separator ',', limited to 7 digits before the decimal point
+     *
+     * @param $val
+     * @return string
+     */
+    public static function  formatAmountPayPal($val)
+    {
+        $result = number_format($val, 2, '.', ',');
         return $result;
     }
 

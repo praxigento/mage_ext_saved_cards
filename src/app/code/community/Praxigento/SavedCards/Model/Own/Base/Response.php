@@ -10,7 +10,7 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
-abstract class Praxigento_Ips_Model_Own_Base_Response
+abstract class Praxigento_SavedCards_Model_Own_Base_Response
 {
-
+    public abstract function isSucceed();
 }

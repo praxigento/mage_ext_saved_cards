@@ -9,15 +9,50 @@
  */
 class Praxigento_SavedCards_Config
 {
-    /** Session flag to save current credit card when card processing will succeed (boolean). */
-    const SESS_SAVE_CREDIT_CARD = 'prxgt_savedcards_save_card_in_registry';
-    /** model node name in module's etc/config.xml */
-    const CFG_MODEL = 'prxgt_savedcards_model';
+    /** Magento address attributes */
+    const ATTR_ADDR_CITY = 'city';
+    const ATTR_ADDR_COMPANY = 'company';
+    const ATTR_ADDR_COUNTRY_ID = 'country_id';
+    const ATTR_ADDR_NAME_FIRST = 'firstname';
+    const ATTR_ADDR_NAME_LAST = 'lastname';
+    const ATTR_ADDR_PHONE = 'telephone';
+    const ATTR_ADDR_STATE = 'region';
+    const ATTR_ADDR_STATE_ID = 'region_id';
+    const ATTR_ADDR_STREET = 'street';
+    const ATTR_ADDR_ZIP = 'postcode';
+    /** Authorize.Net ID used in CIM API */
+    const ATTR_CUST_AN_CUSTOMER_ID = 'prxgt_savedcards_an_cust_id';
+    /** Name of the ID attribute for Customer */
+    const ATTR_CUST_ID = Mage_Eav_Model_Entity::DEFAULT_ENTITY_ID_FIELD;
+    const ATTR_CUST_NAME_FIRST = 'firstname';
+    const ATTR_CUST_NAME_LAST = 'lastname';
+    /** Last transaction ID for the Order Payment  */
+    const ATTR_ORDER_PAYMENT_LAST_TRANS_ID = 'last_trans_id';
+    /** ID of the saved card (if the saved card has been used for the payment)) */
+    const ATTR_ORDER_PAYMENT_SAVED_CARD_ID = self::CFG_FLD_PAYMENT_SAVED_CARD_ID;
+    /** ID of the saved card (if the saved card has been used for the payment)) */
+    const ATTR_QUOTE_PAYMENT_SAVED_CARD_ID = self::CFG_FLD_PAYMENT_SAVED_CARD_ID;
     /** ./etc/config.xml:/config/global/models/prxgt_savedcards_model_resource/entities */
     const CFG_ENTITY_REGISTRY_CARD = 'own_registry_card';
-    /** ./etc/config.xml:/config/global/fieldsets/sales_convert_quote_payment */
-    const CFG_FLD_PAYMENT_SAVED_CARD_ID = 'prxgt_saved_card_id';
-    const ATTR_QUOTE_PAYMENT_SAVED_CARD_ID = self::CFG_FLD_PAYMENT_SAVED_CARD_ID;
+    /**
+     * ./etc/config.xml:/config/global/fieldsets/sales_convert_quote_payment
+     */
+    const CFG_FLD_PAYMENT_SAVED_CARD_ID = 'prxgt_savedcards_id';
+    /** model node name in module's etc/config.xml */
+    const CFG_MODEL = 'prxgt_savedcards_model';
+    /**
+     * Module level configuration: payment method code
+     * (see node /config/sections/payment/groups/prxgt_savedcards_method in system.xml)
+     */
+    const MODULE_PAYMENT_METHOD = 'prxgt_savedcards_method';
+    /** Session flag to save current credit card when card processing will succeed (boolean). */
+    const SESS_SAVE_CREDIT_CARD = 'prxgt_savedcards_save_card_in_registry';
+    /** Entity type code for Customer  */
+    const TYPE_ENTITY_CUSTOMER = 'customer';
+    /** Entity type code for Order Payment  */
+    const TYPE_ENTITY_ORDER_PAYMENT = 'order_payment';
+    /** Entity type code for Quote Payment  */
+    const TYPE_ENTITY_QUOTE_PAYMENT = 'quote_payment';
     /**
      * Itself. Singleton.
      * We should not use static methods (bad testability).

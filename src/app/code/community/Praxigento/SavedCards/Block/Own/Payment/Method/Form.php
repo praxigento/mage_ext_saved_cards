@@ -7,18 +7,20 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+use Praxigento_SavedCards_Config as Config;
 use Praxigento_SavedCards_Model_Own_Registry_Card as RegCard;
 
 class Praxigento_SavedCards_Block_Own_Payment_Method_Form extends Mage_Payment_Block_Form_Cc
 {
     /**
      * ID for DOM element: payment method selector (radio button).
+     * Value is equal to "{Config::MODULE_PAYMENT_METHOD}_{self::FLD_SAVED_CARD_ID}
      */
-    const DOM_ID_SELECTOR = 'prxgt_savedcards_method_prxgt_saved_card_id';
+    const DOM_ID_SELECTOR = 'prxgt_savedcards_method_prxgt_savedcards_id';
     const DOM_ID_WRAPPER = 'prxgt_savedcards_cc_wrapper';
-    const FLD_SAVED_CARD_ID = 'prxgt_saved_card_id';
-    const FLD_SAVE_FLAG = 'prxgt_saved_card_flag';
-    const VAL_NEW_CARD = 'prxgt_saved_card_flag_new';
+    const FLD_SAVED_CARD_ID = Config::CFG_FLD_PAYMENT_SAVED_CARD_ID;
+    const FLD_SAVE_FLAG = 'prxgt_savedcards_flag';
+    const VAL_NEW_CARD = 'prxgt_savedcards_flag_new';
     /**
      *Cards are the same for all block instances, so collection is static.
      *
