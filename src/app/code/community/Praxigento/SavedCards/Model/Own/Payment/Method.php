@@ -69,8 +69,7 @@ class Praxigento_SavedCards_Model_Own_Payment_Method extends \Mage_Payment_Model
      */
     public function isAvailable($quote = null)
     {
-        //   return parent::isAvailable($quote);
-        return true;
+        return parent::isAvailable($quote);
     }
 
     /**
