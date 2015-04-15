@@ -31,7 +31,6 @@ class Praxigento_SavedCards_Model_Own_Service_Common_Bean_CreditCard extends \Pr
     /**
      * Hash code to lookup card in module's registry. It's not secure feature, it's just a hash code for data lookup.
      *
-     * @param Praxigento_Autoship_Service_Type_CreditCard $card
      * @return string
      */
     public function getHash()

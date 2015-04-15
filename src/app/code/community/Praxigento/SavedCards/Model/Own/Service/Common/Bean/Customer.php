@@ -32,13 +32,13 @@ class Praxigento_SavedCards_Model_Own_Service_Common_Bean_Customer extends \Prax
      */
     public static function parseMageCustomer(\Mage_Customer_Model_Customer $data)
     {
-        $result = new Praxigento_Autoship_Service_Type_Customer();
-        $result->setAnReference($data->getData(Praxigento_Autoship_Config::ATTR_CUST_AN_CUSTOMER_ID));
-        $result->setEmail($data->getEmail());
-        $result->setIdMage($data->getId());
-        $result->setNameFirst($data->getData(Praxigento_Autoship_Config::ATTR_CUST_NAME_FIRST));
-        $result->setNameLast($data->getData(Praxigento_Autoship_Config::ATTR_CUST_NAME_LAST));
-        return $result;
+//        $result = new Praxigento_Autoship_Service_Type_Customer();
+//        $result->setAnReference($data->getData(Praxigento_Autoship_Config::ATTR_CUST_AN_CUSTOMER_ID));
+//        $result->setEmail($data->getEmail());
+//        $result->setIdMage($data->getId());
+//        $result->setNameFirst($data->getData(Praxigento_Autoship_Config::ATTR_CUST_NAME_FIRST));
+//        $result->setNameLast($data->getData(Praxigento_Autoship_Config::ATTR_CUST_NAME_LAST));
+//        return $result;
     }
 
     /**
