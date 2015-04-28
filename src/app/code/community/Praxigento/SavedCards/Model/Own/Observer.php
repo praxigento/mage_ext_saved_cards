@@ -13,6 +13,12 @@ use Praxigento_SavedCards_Model_Own_Registry_Card as RegistryCard;
 
 class Praxigento_SavedCards_Model_Own_Observer extends Mage_Core_Model_Observer
 {
+    /**
+     * Flag to save credit card data to registry onSalesConvertQuoteAddressToOrder
+     * and restore from onSalesModelServiceQuoteSubmitSuccess.
+     */
+    const REGISTRY_CREDIT_CARD = 'prxgt_autoship_credit_card';
+
     /** @var Praxigento_SavedCards_Config */
     private $_cfg;
 
@@ -79,7 +85,7 @@ class Praxigento_SavedCards_Model_Own_Observer extends Mage_Core_Model_Observer
                     ($method == \Mage_Paypal_Model_Config::METHOD_WPP_DIRECT) ||
                     ($method == Config::MODULE_PAYMENT_METHOD)
                 ) {
-                    $this->_registrySaveCreditCard(
+                    $this->_registerCreditCardData(
                         $one->getData('cc_number'),
                         $one->getData('cc_cid'),
                         $one->getData('cc_exp_month'),
@@ -96,19 +102,18 @@ class Praxigento_SavedCards_Model_Own_Observer extends Mage_Core_Model_Observer
      * @param $expMonth
      * @param $expYear
      */
-    private function _registrySaveCreditCard($number, $cvv, $expMonth, $expYear)
+    private function _registerCreditCardData($number, $cvv, $expMonth, $expYear)
     {
-        /** @var  $card Praxigento_Autoship_Service_Type_CreditCard */
-        $card = new Praxigento_Autoship_Service_Type_CreditCard();
+        /** @var  $card Praxigento_SavedCards_Model_Own_Service_Common_Bean_CreditCard */
+        $card = Mage::getModel('prxgt_savedcards_model/own_service_common_bean_creditCard');
         $card->setCvv($cvv);
-        $month = ($expMonth < 10) ? '0' . $expMonth : $expMonth;
-        $card->setExpMonth($month);
+        $card->setExpMonth($expMonth);
         $card->setExpYear($expYear);
         $card->setNumber($number);
-        $type = Praxigento_Autoship_Util::convertCardNumberToType($number);
+        $type = $this->_cfg->helper()->convertCardNumberToType($number);
         $card->setType($type);
         /** save card to Magento registry */
-        Mage::register(Praxigento_Autoship_Config::REGISTRY_CREDIT_CARD, $card);
+        Mage::register(self::REGISTRY_CREDIT_CARD, $card);
     }
 
     /**
@@ -131,7 +136,8 @@ class Praxigento_SavedCards_Model_Own_Observer extends Mage_Core_Model_Observer
     }
 
     /**
-     * Quote has been converted to (paid) order. Create or update autoship, save credit card.
+     * Quote has been paid and converted to order. Save credit card data.
+     *
      * @param Varien_Event_Observer $event
      */
     public function onSalesModelServiceQuoteSubmitSuccess(Varien_Event_Observer $event)
@@ -140,29 +146,29 @@ class Praxigento_SavedCards_Model_Own_Observer extends Mage_Core_Model_Observer
         $order = $event->getData('order');
         /** @var  $wrapper Nmmlm_Core_Wrapper_Sales_Order */
         $wrapper = new Nmmlm_Core_Wrapper_Sales_Order($order);
-        /** INTR-883 : Save credit card first */
+        /** Save credit card */
         $saveCreditCard = Mage::getSingleton('core/session')->getData(Config::SESS_SAVE_CREDIT_CARD);
         if ($saveCreditCard) {
-            /** @var  $card Praxigento_Autoship_Service_Type_CreditCard */
-            $card = Mage::registry(Config::REGISTRY_CREDIT_CARD);
-            $customerMage = Mage::getModel('customer/customer')->load($order->getCustomerId());
-            $customer = Praxigento_Autoship_Service_Type_Customer::parseMageCustomer($customerMage);
-            $addressMage = $order->getBillingAddress();
-            $address = Praxigento_Autoship_Service_Type_Address::parseMageBillingAddress($addressMage);
-            /* Prepare service request. */
-            $req = new Praxigento_Autoship_Service_CreditCard_Request_RegisterRequest();
-            $req->setAddressBilling($address);
-            $req->setCard($card);
-            $req->setCustomer($customer);
-            $srv = new Praxigento_Autoship_Service_CreditCard_Call();
-            $resp = $srv->register($req);
-            $cardId = $resp->getRegisteredCard()->getId();
-            $order->getPayment()->setData(Config::ATTR_ORDER_PAYMENT_SAVED_CARD_ID, $cardId);
-            $wrapper->setData(Config::ATTR_ORDER_PAYMENT_SAVED_CARD_ID, $cardId);
-            $wrapper->save();
-            /** reset flag after the card was saved  */
-            $this->_log->debug("Clean 'Save credit card' flag from the session.");
-            Mage::getSingleton('core/session')->setData(Config::SESS_SAVE_CREDIT_CARD, false);
+//            /** @var  $card Praxigento_SavedCards_Model_Own_Service_Common_Bean_CreditCard */
+//            $card = Mage::registry(self::REGISTRY_CREDIT_CARD);
+//            $customerMage = Mage::getModel('customer/customer')->load($order->getCustomerId());
+//            $customer = Praxigento_Autoship_Service_Type_Customer::parseMageCustomer($customerMage);
+//            $addressMage = $order->getBillingAddress();
+//            $address = Praxigento_Autoship_Service_Type_Address::parseMageBillingAddress($addressMage);
+//            /* Prepare service request. */
+//            $req = new Praxigento_Autoship_Service_CreditCard_Request_RegisterRequest();
+//            $req->setAddressBilling($address);
+//            $req->setCard($card);
+//            $req->setCustomer($customer);
+//            $srv = new Praxigento_Autoship_Service_CreditCard_Call();
+//            $resp = $srv->register($req);
+//            $cardId = $resp->getRegisteredCard()->getId();
+//            $order->getPayment()->setData(Config::ATTR_ORDER_PAYMENT_SAVED_CARD_ID, $cardId);
+//            $wrapper->setData(Config::ATTR_ORDER_PAYMENT_SAVED_CARD_ID, $cardId);
+//            $wrapper->save();
+//            /** reset flag after the card was saved  */
+//            $this->_log->debug("Clean 'Save credit card' flag from the session.");
+//            Mage::getSingleton('core/session')->setData(Config::SESS_SAVE_CREDIT_CARD, false);
         }
     }
 }
